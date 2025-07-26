@@ -1,0 +1,69 @@
+ <!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom HUD</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Inter:wght@400;500;600;700&family=Russo+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <svg style="position: absolute; height: 0; width: 0;">
+        <filter id="smooth">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="1.5"></feGaussianBlur>
+        </filter>
+    </svg>
+    <div id="hud">
+        <div class="bar health">
+            <span class="icon health-icon"><i class="fa-regular fa-heart fa-lg" style="color: #7a0000;"></i></span>
+            <div class="value" id="health">100%</div>
+        </div>
+        <div class="bar armor">
+             <span class="icon armor-icon"><i class="fa-solid fa-shield" style="color: #002966;"></i></span> 
+             <div class="value" id="armor">100%</div>
+       </div>
+        <div class="bar hunger">
+            <span class="icon hunger-icon"><i class="fa-solid fa-pizza-slice" style="color: #fced6a;"></i></span>
+            <div class="value" id="hunger">100%</div>
+        </div>
+        <div class="bar thirst">
+            <span class="icon thirst-icon"><i class="fa-solid fa-droplet" style="color: #57e4fd;"></i></span>
+            <div class="value" id="thirst">100%</div>
+        </div>
+        <div class="bar stamina">
+            <span class="icon stamina-icon"><i class="fa-solid fa-bolt" style="color: #a4ff3b;"></i></span>
+            <div class="value" id="stamina">100%</div>
+        </div>
+        <div class="bar oxygen">
+            <span class="icon oxygen-icon"><i class="fa-solid fa-lungs" style="color: #00bfff;"></i></span>
+            <div class="value" id="oxygen">100%</div>
+        </div>
+        <div id="location-compass-wrapper">
+            <div id="compass">
+                <i class="fas fa-compass"></i>
+                <span id="compass-direction">Severozápad</span>
+            </div>
+            <div id="location">
+                <i class="fas fa-map-marker-alt"></i>
+                <div id="location-text">
+                    <div id="street-name">Goma St</div>
+                    <div id="area-name">Vespucci Beach</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bar mic">
+            <span class="icon mic-icon" id="mic">
+                <i class="fa-solid fa-microphone" style="color: #f0f0f0;"></i>
+                <div class="dots-container">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </span>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

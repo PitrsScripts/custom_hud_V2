@@ -1,0 +1,273 @@
+@import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Poppins;
+    background: transparent;
+}
+
+#hud {
+    position: fixed;
+    bottom: 30px;
+    left: 15px;
+    color: white;
+    font-size: 14px;
+    z-index: 1000;
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    position: relative;
+    font-size: 16px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.644);
+    border-radius: 50%;
+    color: white;
+    text-align: center;
+    margin-right: 8px;
+}
+
+.icon::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    background: transparent;
+    background-image: conic-gradient(
+        var(--progress-color) var(--progress),
+        transparent var(--progress)
+    );
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    padding: 2px;
+}
+
+.icon-scaling {
+    transform-origin: center center;
+}
+
+.value {
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    text-align: center;
+    width: 40px;
+    letter-spacing: 0px;
+}
+
+.mic-icon {
+    position: fixed;
+    bottom: 70px;
+    left: 35px;
+    font-size: 16px;
+    width: 60px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 14px;
+    color: white;
+    text-align: center;
+    margin-right: 8px;
+    padding-left: 5px;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.295);
+    margin: 0 2px;
+}
+
+.dots-container {
+    transform: translate(2%, -10%);
+}
+
+.mic-icon.mic-active i {
+    color: #ffd700;
+    animation: micBounce 0.6s infinite ease-in-out;
+}
+
+@keyframes micBounce {
+    0%, 100% {
+        transform: translateY(0px);
+        color: #ffd700;
+    }
+    50% {
+        transform: translateY(-3px);
+        color: #ffed4e;
+    }
+}
+
+.mic-icon.mic-whisper .dot:nth-child(1) {
+    background-color: rgb(0, 153, 255);
+}
+
+.mic-icon.mic-normal .dot:nth-child(1),
+.mic-icon.mic-normal .dot:nth-child(2) {
+    background-color: rgb(0, 153, 255);
+}
+
+.mic-icon.mic-shouting .dot {
+    background-color: rgb(0, 153, 255);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* Nový kompas a lokace */
+
+#location-compass-wrapper {
+    position: absolute;   
+    bottom: 180px;        
+    left: -290px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 1000;
+}
+
+#compass {
+    width: auto;
+    min-width: 70px;
+    height: 10px;             
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 6px;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    user-select: none;
+    background-color: transparent;
+    overflow: visible;       
+    box-sizing: border-box;
+}
+
+#compass i {
+    position: relative;
+    left: 0px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(36, 31, 31, 0.795);
+    color: white;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: 0;
+    margin-bottom: 0;         
+    box-sizing: border-box;
+}
+
+#compass-direction {
+    font-family: 'Russo One', sans-serif;
+    color: white;
+    font-size: 16px;
+    margin-left: 4px;
+    user-select: none;
+    line-height: 30px;
+    white-space: nowrap;
+    background-color: transparent; 
+}
+
+#location {
+    width: auto;  
+    height: 55px;
+    min-width: 150px; 
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 6px;
+    color: white;
+    font-size: 14px;
+    user-select: none;
+}
+
+#location i {
+    position: relative;
+    left: 0px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: rgba(36, 31, 31, 0.795);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    font-size: 18px;
+}
+
+#location-text {
+    font-family: 'Russo One', sans-serif;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    user-select: none;
+    background-color: transparent; 
+}
+
+#street-name {
+    font-weight: 400;
+}
+
+#area-name {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.bar.oxygen {
+    display: none;
+}
+
+@supports (filter: url('#smooth')) {
+    .icon::before {
+        filter: url('#smooth');
+    }
+}
+
+/*
+<svg style="position: absolute; height: 0; width: 0;">
+  <filter id="smooth">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="0.2"></feGaussianBlur>
+  </filter>
+</svg>
+*/
