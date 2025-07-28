@@ -62,36 +62,33 @@ function SetMinimapPosition()
 end
 
 Citizen.CreateThread(function()
+    Wait(2000)
     MinimapScaleform.scaleform = RequestScaleformMovie("minimap")
-    SetRadarBigmapEnabled(false, false)
-    Wait(0)
+    while not HasScaleformMovieLoaded(MinimapScaleform.scaleform) do
+        Wait(0)
+    end
+    
+    SetRadarBigmapEnabled(true, false)
+    Wait(100)
     SetRadarBigmapEnabled(false, false)
     SetMinimapPosition()
-end)
-
-Citizen.CreateThread(function()
-    local minimap = RequestScaleformMovie("minimap")
-    SetRadarBigmapEnabled(false, false)
-    Wait(0)
-    SetRadarBigmapEnabled(false, false)
+    DisplayRadar(true)
+    
     while true do
         Wait(100)
-        BeginScaleformMovieMethod(minimap, "SETUP_HEALTH_ARMOUR")
-        ScaleformMovieMethodAddParamInt(3) 
+        BeginScaleformMovieMethod(MinimapScaleform.scaleform, "SETUP_HEALTH_ARMOUR")
+        ScaleformMovieMethodAddParamInt(3)
         EndScaleformMovieMethod()
     end
 end)
-
-local _DisplayRadar = DisplayRadar
-DisplayRadar = function() end
 
 CreateThread(function()
     while true do
         Wait(300)
         if IsPedInAnyVehicle(PlayerPedId()) then
-            _DisplayRadar(true)
+            DisplayRadar(true)
         else
-            _DisplayRadar(false)
+            DisplayRadar(false)
         end
     end
 end)
@@ -116,8 +113,12 @@ AddEventHandler('onClientResourceStart', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
     end
-    Wait(1000)
+    Wait(2000)
+    SetRadarBigmapEnabled(true, false)
+    Wait(100)
+    SetRadarBigmapEnabled(false, false)
     SetMinimapPosition()
+    DisplayRadar(true)
     TriggerServerEvent('hud:server:LoadArmor')
     SendNUIMessage({type = "toggleHUDIcons", visible = false}) 
 end)
