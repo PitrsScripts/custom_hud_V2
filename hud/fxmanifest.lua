@@ -29,8 +29,10 @@ files {
     'html/script.js'
 }
 
-dependencies {
-    'es_extended',
+despencies {
     'ox_lib',
-    'oxmysql'
+    'oxmysql',
+    'es_extended',
+    'esx_status',
+    'esx_basicneeds',
 }
