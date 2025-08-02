@@ -54,7 +54,7 @@ local MinimapScaleform = {
 }
 
 function SetMinimapPosition()
-    local minimapPosX = 0.005
+    local minimapPosX = 0.025
     local minimapPosY = -0.022
     SetMinimapComponentPosition("minimap", "L", "B", minimapPosX, minimapPosY, 0.150, 0.188888)
     SetMinimapComponentPosition("minimap_mask", "L", "B", minimapPosX + 0.025, 0.050, 0.111, 0.159)
@@ -64,9 +64,11 @@ end
 Citizen.CreateThread(function()
     Wait(2000)
     MinimapScaleform.scaleform = RequestScaleformMovie("minimap")
-    while not HasScaleformMovieLoaded(MinimapScaleform.scaleform) do
-        Wait(0)
+    RequestStreamedTextureDict("squaremap", false)
+    while not HasStreamedTextureDictLoaded("squaremap") do
+        Wait(100)
     end
+    AddReplaceTexture("platform:/textures/graphics", "radarmasksm", "squaremap", "radarmasksm")
     
     SetRadarBigmapEnabled(true, false)
     Wait(100)

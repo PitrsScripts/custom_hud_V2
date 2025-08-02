@@ -160,6 +160,14 @@ body {
     z-index: 1000;
 }
 
+.bar.compass {
+    transition: transform 0.3s ease;
+}
+
+.bar.location {
+    transition: transform 0.3s ease;
+}
+
 #compass {
     width: auto;
     min-width: 70px;

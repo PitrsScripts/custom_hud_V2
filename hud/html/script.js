@@ -123,8 +123,6 @@ window.addEventListener('message', function (event) {
         if (event.data.isInVehicle) {
             staminaBar.style.display = 'none';
 
-            resetAllTransforms();
-
             setVehicleHUDPosition(); 
             setVehicleMicPosition();
             setVehicleCompassPosition();  
@@ -236,7 +234,7 @@ function setLocationPosition(x, y) {
 function setVehicleHUDPosition() {
     const hud = document.getElementById('hud');
     if (hud) {
-        hud.style.transform = 'translate(277px, -20px)';
+        hud.style.transform = 'translate(320px, -32px)';
     }
 }
 
@@ -297,27 +295,31 @@ function resetAllTransforms() {
     const hungerBar = document.querySelector('.bar.hunger');
     const thirstBar = document.querySelector('.bar.thirst');
     const hud = document.getElementById('hud');
+    const compassBar = document.querySelector('.bar.compass');
+    const locationBar = document.querySelector('.bar.location');
     if (hungerBar) {
         hungerBar.style.transform = 'none';
     }
     if (thirstBar) {
         thirstBar.style.transform = 'none';
     }
-
     if (hud) {
         hud.style.transform = 'none';
+    }
+    if (compassBar) {
+        compassBar.style.transform = 'none';
+    }
+    if (locationBar) {
+        locationBar.style.transform = 'none';
     }
 }
 
 
 
 function setVehicleCompassPosition() {
-    const compassBar = document.querySelector('.bar.compass');
-    if (compassBar) {
-        compassBar.style.position = 'fixed';
-        compassBar.style.top = '20px';
-        compassBar.style.right = '20px';
-        compassBar.style.zIndex = '1001';
+    const compass = document.getElementById('compass');
+    if (compass) {
+        compass.style.setProperty('transform', 'translate(-37px, 15px)', 'important');
     }
 }
 
@@ -332,12 +334,9 @@ function setVehicleCompassTextPosition() {
 }
 
 function resetCompassPosition() {
-    const compassBar = document.querySelector('.bar.compass');
-    if (compassBar) {
-        compassBar.style.position = 'relative';
-        compassBar.style.top = 'auto';
-        compassBar.style.right = 'auto';
-        compassBar.style.zIndex = 'auto';
+    const compass = document.getElementById('compass');
+    if (compass) {
+        compass.style.transform = 'none';
     }
 }
 
@@ -352,22 +351,16 @@ function resetCompassTextPosition() {
 }
 
 function setVehicleLocationPosition() {
-    const locationBar = document.querySelector('.bar.location');
-    if (locationBar) {
-        locationBar.style.position = 'fixed';
-        locationBar.style.top = '70px';
-        locationBar.style.right = '20px';
-        locationBar.style.zIndex = '1001';
+    const location = document.getElementById('location');
+    if (location) {
+        location.style.setProperty('transform', 'translate(-37px, 15px)', 'important');
     }
 }
 
 function resetLocationPosition() {
-    const locationBar = document.querySelector('.bar.location');
-    if (locationBar) {
-        locationBar.style.position = 'relative';
-        locationBar.style.top = 'auto';
-        locationBar.style.right = 'auto';
-        locationBar.style.zIndex = 'auto';
+    const location = document.getElementById('location');
+    if (location) {
+        location.style.transform = 'none';
     }
 }
 

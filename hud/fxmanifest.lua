@@ -29,6 +29,11 @@ files {
     'html/script.js'
 }
 
+files {
+    'stream/minimap.gfx',
+    'stream/squaremap.ytd'
+}
+
 despencies {
     'ox_lib',
     'oxmysql',
