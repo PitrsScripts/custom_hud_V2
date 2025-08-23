@@ -49,49 +49,44 @@ local hudScale = 1.0
 
 
 -- ====== MINIMAP ======
-local MinimapScaleform = {
-    scaleform = nil,
-}
+function LoadRectMinimap()
+    local defaultAspectRatio = 1920/1080
+    local resolutionX, resolutionY = GetActiveScreenResolution()
+    local aspectRatio = resolutionX/resolutionY
+    local minimapOffset = 0
+    if aspectRatio > defaultAspectRatio then
+        minimapOffset = ((defaultAspectRatio-aspectRatio)/3.6)-0.008
+    end
+    RequestStreamedTextureDict("squaremap", false)
+    while not HasStreamedTextureDictLoaded("squaremap") do
+        Wait(150)
+    end
 
-function SetMinimapPosition()
-    local minimapPosX = 0.025
-    local minimapPosY = -0.022
-    SetMinimapComponentPosition("minimap", "L", "B", minimapPosX, minimapPosY, 0.150, 0.188888)
-    SetMinimapComponentPosition("minimap_mask", "L", "B", minimapPosX + 0.025, 0.050, 0.111, 0.159)
-    SetMinimapComponentPosition("minimap_blur", "L", "B", minimapPosX - 0.03, -0.0005, 0.266, 0.237)
+    SetMinimapClipType(0)
+    AddReplaceTexture("platform:/textures/graphics", "radarmasksm", "squaremap", "radarmasksm")
+    AddReplaceTexture("platform:/textures/graphics", "radarmask1g", "squaremap", "radarmasksm")
+    
+    SetMinimapComponentPosition("minimap", "L", "B", -0.015 + minimapOffset, -0.025, 0.1638, 0.183)
+    SetMinimapComponentPosition("minimap_mask", "L", "B", -0.015 + minimapOffset, 0.015, 0.128, 0.20)
+    SetMinimapComponentPosition('minimap_blur', 'L', 'B', -0.02 + minimapOffset, 0.04, 0.262, 0.300)
+
+    SetBlipAlpha(GetNorthRadarBlip(), 0)
+    SetRadarBigmapEnabled(true, false)
+    SetMinimapClipType(0)
+    Wait(0)
+    SetRadarBigmapEnabled(false, false)
 end
 
 Citizen.CreateThread(function()
     Wait(2000)
-    MinimapScaleform.scaleform = RequestScaleformMovie("minimap")
-    RequestStreamedTextureDict("squaremap", false)
-    while not HasStreamedTextureDictLoaded("squaremap") do
-        Wait(100)
-    end
-    AddReplaceTexture("platform:/textures/graphics", "radarmasksm", "squaremap", "radarmasksm")
-    
-    SetRadarBigmapEnabled(true, false)
-    Wait(100)
-    SetRadarBigmapEnabled(false, false)
-    SetMinimapPosition()
-    DisplayRadar(true)
-    
-    while true do
-        Wait(100)
-        BeginScaleformMovieMethod(MinimapScaleform.scaleform, "SETUP_HEALTH_ARMOUR")
-        ScaleformMovieMethodAddParamInt(3)
-        EndScaleformMovieMethod()
-    end
+    LoadRectMinimap()
 end)
 
 CreateThread(function()
     while true do
         Wait(300)
-        if IsPedInAnyVehicle(PlayerPedId()) then
-            DisplayRadar(true)
-        else
-            DisplayRadar(false)
-        end
+        local playerPed = PlayerPedId()
+        DisplayRadar(IsPedInAnyVehicle(playerPed))
     end
 end)
 
@@ -105,22 +100,19 @@ AddEventHandler('esx:playerLoaded', function()
 end)
 
 RegisterNetEvent('esx_multicharacter:characterChosen')
- AddEventHandler('esx_multicharacter:characterChosen', function()
-     isCharacterChosen = true
-     Wait(1000)
-     SendNUIMessage({type = "toggleHUDIcons", visible = true})
- end)
+AddEventHandler('esx_multicharacter:characterChosen', function()
+    isCharacterChosen = true
+    Wait(1000)
+    LoadRectMinimap()
+    SendNUIMessage({type = "toggleHUDIcons", visible = true})
+end)
 
 AddEventHandler('onClientResourceStart', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
     end
     Wait(2000)
-    SetRadarBigmapEnabled(true, false)
-    Wait(100)
-    SetRadarBigmapEnabled(false, false)
-    SetMinimapPosition()
-    DisplayRadar(true)
+    LoadRectMinimap()
     TriggerServerEvent('hud:server:LoadArmor')
     SendNUIMessage({type = "toggleHUDIcons", visible = false}) 
 end)
@@ -129,7 +121,7 @@ end)
 AddEventHandler('playerSpawned', function()
     Wait(1000)
     TriggerServerEvent('hud:server:LoadArmor')
-    SetMinimapPosition()
+    LoadRectMinimap()
 end)
 
 CreateThread(function()

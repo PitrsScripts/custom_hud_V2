@@ -31,6 +31,7 @@ files {
 
 files {
     'stream/minimap.gfx',
+    'stream/minimap.ytd',
     'stream/squaremap.ytd'
 }
 
